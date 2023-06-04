@@ -4,7 +4,6 @@ import pyperclip
 import webbrowser
 from datetime import datetime
 from auth_generator import AuthGenerator
-from PIL import Image, ImageTk
 import os
 
 
