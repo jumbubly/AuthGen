@@ -1,0 +1,10 @@
+{
+    "db_path": "auth.db",
+    "table_prefix": "auth_keys_",
+    "github_account": "https://github.com/jumbubly",
+    "cracked_account": "https://cracked.io/rekingg",
+    "author_info": "AuthGen Made By ReKingg",
+    "bitcoin_code": "bc1qadtnnc06hg3ekck785xxw4pmv89nfd2p5q7v3n",
+    "icon_path": "icon.ico"
+  }
+  
