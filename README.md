@@ -24,13 +24,13 @@ AuthGen is a powerful tool that can help developers improve the security of thei
 
 Here are some additional details about the tool:
 
-Usage:
+**Usage:**
 
 Generating Authentication Keys: The application allows you to generate authentication keys with customizable durations. Simply click on the corresponding button for the desired duration (e.g., 1-day, 3-days, 7-days, 30-days & More In New Versions of Application) to generate a key. The generated key will be displayed along with its expiration date.
 
 Managing Authentication Keys: The application provides a comprehensive interface for managing authentication keys. You can view and delete existing keys for different durations. The keys are organized in a user-friendly display, showing the key value, expiration date, and options to copy or delete keys.
 
-Advantages:
+**Advantages:**
 
 Easy Key Generation: The AuthGen simplifies the process of generating authentication keys with just a few clicks. You can quickly generate keys for different durations without the need for complex programming or manual calculations.
 
