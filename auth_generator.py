@@ -3,7 +3,7 @@ import sqlite3
 import json
 import os
 from datetime import datetime, timedelta
-from tkinter import messagebox
+from PyQt6.QtWidgets import QMessageBox
 
 config_file = "config.json"
 
@@ -12,6 +12,7 @@ class AuthGenerator:
         self.current_dir = os.path.dirname(os.path.abspath(__file__))
         self.db_path = None
         self.config = None  # Added config attribute
+        self.version = "1.2"  # Added version attribute
         self.load_config()
         self.db_path = os.path.join(self.current_dir, self.db_path)
         self.initialize_database()
@@ -44,7 +45,7 @@ class AuthGenerator:
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(f'DELETE FROM {table_name} WHERE auth_key = ?', (auth_key,))
-        messagebox.showinfo("Key Deleted", f"The key {auth_key} has been deleted.")
+        QMessageBox.information(None, "Key Deleted", f"The key {auth_key} has been deleted.")
 
     def get_auth_keys(self, days):
         table_prefix = self.config.get("table_prefix", "auth_keys_")
