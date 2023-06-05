@@ -5,7 +5,9 @@ from PyQt6.QtCore import Qt, QUrl, QTimer
 from datetime import datetime
 import pyperclip
 import os
+from pyqt_fixes import fix_pyqt_paths
 from auth_generator import AuthGenerator
+
 
 class AuthGeneratorGUI(QMainWindow):
     def __init__(self, auth_generator):
@@ -13,12 +15,12 @@ class AuthGeneratorGUI(QMainWindow):
         self.auth_generator = auth_generator
         self.setWindowTitle("Authentication Key Generator")
         self.auth_generator.load_config()  # Load the configuration
-        
+
         self.about_dialog = None  # Instance variable to store the About dialog
         self.bitcoin_label = None  # Instance variable for the Bitcoin label
 
         # Set the window icon using the icon_path
-        icon_path = os.path.join(os.path.dirname(__file__), "icon.ico")
+        icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.ico")
         self.setWindowIcon(QIcon(icon_path))
 
         self.central_widget_layout = QVBoxLayout()
@@ -33,7 +35,7 @@ class AuthGeneratorGUI(QMainWindow):
         self.create_menu()
         self.create_account_buttons()
 
-        self.version_label = QLabel("Version 1.2")
+        self.version_label = QLabel(f"Version {self.auth_generator.version}")
         self.statusBar().addWidget(self.version_label, stretch=1)
 
     def create_menu(self):
@@ -175,8 +177,12 @@ class AuthGeneratorGUI(QMainWindow):
 
 
     def generate_key_button_click(self, days, table_name):
-        auth_key, expiry_date = self.auth_generator.generate_auth_key(days, table_name)
-        self.display_auth_key(auth_key, expiry_date)
+        try:
+            auth_key, expiry_date = self.auth_generator.generate_auth_key(days, table_name)
+            self.display_auth_key(auth_key, expiry_date)
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
+
 
     def display_auth_key(self, auth_key, expiry_date):
         self.key_label.setText(f"Authentication Key: {auth_key}\nExpires on: {expiry_date}")
@@ -189,6 +195,7 @@ class AuthGeneratorGUI(QMainWindow):
         self.auth_generator.delete_key(auth_key, table_name)
         self.display_keys_button_click()  # Recreate the display screen
         self.activateWindow()  # Set focus back to the main window
+
 
     def display_keys_button_click(self):
         if hasattr(self, "keys_window"):
@@ -233,8 +240,6 @@ class AuthGeneratorGUI(QMainWindow):
                     key_layout.setSpacing(5)
                     key_frame.setLayout(key_layout)
                     layout.addWidget(key_frame)
-            else:
-                layout.addWidget(QLabel("No keys found"))
 
         layout.setSpacing(20)
         layout.setAlignment(Qt.AlignmentFlag.AlignTop)
@@ -244,6 +249,7 @@ class AuthGeneratorGUI(QMainWindow):
 
 def run_gui():
     app = QApplication(sys.argv)
+    fix_pyqt_paths()  # Call the fix_pyqt_paths function
     auth_generator = AuthGenerator()
     gui = AuthGeneratorGUI(auth_generator)
     gui.show()

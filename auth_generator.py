@@ -20,8 +20,8 @@ class AuthGenerator:
     def load_config(self):
         config_path = os.path.join(self.current_dir, config_file)
         with open(config_path, "r") as f:
-            self.config = json.load(f)  # Store config in the attribute
-            self.db_path = self.config.get("db_path", "auth.db")
+           self.config = json.load(f)  # Update the config attribute
+           self.db_path = self.config.get("db_path", "auth.db")
 
     def initialize_database(self):
         with sqlite3.connect(self.db_path) as conn:
@@ -50,8 +50,16 @@ class AuthGenerator:
     def get_auth_keys(self, days):
         table_prefix = self.config.get("table_prefix", "auth_keys_")
         table_name = f'{table_prefix}{days}'
+
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
+            cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'")
+            result = cursor.fetchone()
+
+            if result is None:
+                return []
+
             cursor.execute(f'SELECT auth_key, expiry_date FROM {table_name}')
             keys = cursor.fetchall()
+
         return keys
